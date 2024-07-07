@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PygeoAPI-GUI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Start : navbar -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">PygeoAPI-GUI</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+        </div>
+    </nav>
+    <!-- End : navbar -->
+
+
+
+    <div class="container mt-5">
+        <!-- Start : YAML Drop input -->
+        <div id="dropZone" class="drop-zone">
+            Drag and drop your YAML file here
+        </div>
+        <input type="file" id="fileInput" accept=".yaml, .yml" style="display: none;">
+
+        <!-- End : YAML Drop input -->
+
+        <!-- Start : Server configuration -->
+        <div class="card mt-2">
+            <div class="card-header">
+                <b>server</b>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <label for="server_host" class="col-sm-2 col-form-label">Host</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="server_host">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="server_port" class="col-sm-2 col-form-label">Port</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" id="server_port">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="server_url" class="col-sm-2 col-form-label">URL</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="server_url">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="server_gzip" class="col-sm-2 col-form-label">GZIP</label>
+                    <div class="col-sm-10">
+                        <input class="form-check-input" type="checkbox" id="server_gzip" value="option1">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="server_pretty_print" class="col-sm-2 col-form-label">Pretty Print</label>
+                    <div class="col-sm-10">
+                        <input class="form-check-input" type="checkbox" id="server_pretty_print" value="option1">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="server_admin" class="col-sm-2 col-form-label">Admin</label>
+                    <div class="col-sm-10">
+                        <input class="form-check-input" type="checkbox" id="server_admin" value="option1">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="server_cors" class="col-sm-2 col-form-label">CORS</label>
+                    <div class="col-sm-10">
+                        <input class="form-check-input" type="checkbox" id="server_cors" value="option1">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="server_mimetype" class="col-sm-2 col-form-label">MIMEType</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="server_mimetype">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="server_encoding" class="col-sm-2 col-form-label">encoding</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="server_encoding">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="server_limit" class="col-sm-2 col-form-label">limit</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" id="server_limit">
+                    </div>
+                </div>
+                <div class="mb-3 input-group">
+                    <span class="col-sm-2 input-group-text">Map</span>
+                    <input type="url" id="server_map_url" aria-label="URL"
+                        placeholder="https://tile.openstreetmap.org/{z}/{x}/{y}.png" class="form-control">
+                    <input type="text" aria-label="attribution" id="server_map_attribution"
+                        placeholder='<a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+                        class="form-control">
+                </div>
+                <div class="input-group mb-3">
+                    <label class="col-sm-2 input-group-text" for="server_languages">Languages</label>
+                    <select class="form-select" id="server_languages">
+                        <option disabled selected>Choose...</option>
+                        <option value="en-US">English (United States)</option>
+                        <option value="fr-CA">Français (Canada)</option>
+                        <option value="es-ES">Español (España)</option>
+                        <option value="de-DE">Deutsch (Deutschland)</option>
+                        <option value="zh-CN">中文 (中国)</option>
+                        <option value="ja-JP">日本語 (日本)</option>
+                        <option value="ru-RU">Русский (Россия)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <!-- End : Server configuration -->
+        <!-- Start : Logging configuration -->
+        <div class="card mt-2">
+            <div class="card-header">
+                <b>Logging</b>
+            </div>
+            <div class="card-body">
+
+                <div class="input-group mb-3">
+                    <label class="col-sm-2 input-group-text" for="logging_level">Level</label>
+                    <select class="form-select" id="logging_level">
+                        <option disabled selected>Choose...</option>
+                        <option value="NOTSET">NOTSET</option>
+                        <option value="DEBUG">DEBUG</option>
+                        <option value="INFO">INFO</option>
+                        <option value="WARNING">WARNING</option>
+                        <option value="ERROR">ERROR</option>
+                        <option value="CRITICAL">CRITICAL</option>
+
+                    </select>
+                </div>
+                <div class="row mb-3">
+                    <label for="logging_logfile" class="col-sm-2 col-form-label">Logfile</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" placeholder="/path/to/pygeoapi.log" id="logging_logfile">
+                    </div>
+                </div>
+                <div class="card mt-2">
+                    <div class="card-header">
+                        <b>Rotation</b>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="input-group mb-3">
+                            <label class="col-sm-2 input-group-text" for="logging_rotation_mode">mode</label>
+                            <select class="form-select" id="logging_rotation_mode" onchange="updateRotation(this.value)">
+                                <option selected>Choose...</option>
+                                <option value="time">time</option>
+                                <option value="size">size</option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3 hideIt" id="div_rotation_when">
+                            <label class="col-sm-2 input-group-text" for="logging_rotation_when">when</label>
+                            <select class="form-select" id="logging_rotation_when">
+                                <option disabled selected>Choose...</option>
+                                <option value="s">s</option>
+                                <option value="m">m</option>
+                                <option value="h">h</option>
+                                <option value="d">d</option>
+                                <option value="w0-w6">w0-w6</option>
+                                <option value="midnight">midnight</option>
+                            </select>
+                        </div>
+                        <div class="row mb-3 hideIt" id="div_rotation_interval">
+                            <label for="logging_rotation_interval" class="col-sm-2 col-form-label">Interval</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" placeholder="10" id="logging_rotation_interval">
+                            </div>
+                        </div>
+                        <div class="row mb-3 hideIt" id="div_rotation_max_bytes">
+                            <label for="logging_rotation_max_bytes" class="col-sm-2 col-form-label">Max bytes</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" placeholder="500" id="logging_rotation_max_bytes">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="logging_rotation_backup_count" class="col-sm-2 col-form-label">backup count</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" placeholder="10" id="logging_rotation_backup_count">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End : Logging configuration -->
+        <!-- Start : Metadata configuration -->
+        <div class="card mt-2">
+            <div class="card-header">
+                <b>Metadata</b>
+            </div>
+            <div class="card-body">
+                <!-- Start : Identification Metadata configuration -->
+
+                <div class="card mt-2">
+                    <div class="card-header">
+                        <b>Identification</b>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <label for="metadata_identification_title" class="col-sm-2 col-form-label">Title</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="pygeoapi default instance" \
+                                    id="metadata_identification_title">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="metadata_identification_description"
+                                class="col-sm-2 col-form-label">Description</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control"
+                                    placeholder="pygeoapi provides an API to geospatial data"
+                                    id="metadata_identification_description">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="metadata_identification_keywords"
+                                class="col-sm-2 col-form-label">keywords</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="geospatial,api"
+                                    id="metadata_identification_keywords">
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <label class="col-sm-3 input-group-text"
+                                for="metadata_identification_keywords_type">Keywords type</label>
+                            <select class="form-select" id="metadata_identification_keywords_type">
+                                <option disabled selected>Choose...</option>
+                                <option value="discipline">discipline</option>
+                                <option value="temporal">temporal</option>
+                                <option value="place">place</option>
+                                <option value="theme">theme</option>
+                                <option value="stratum">stratum</option>
+
+                            </select>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="metadata_identification_terms_of_service" class="col-sm-3 col-form-label">Terms
+                                of
+                                service</label>
+                            <div class="col-sm-9">
+                                <input type="url" class="form-control"
+                                    placeholder=" https://creativecommons.org/licenses/by/4.0/"
+                                    id="metadata_identification_terms_of_service">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="metadata_identification_url" class="col-sm-2 col-form-label">URL</label>
+                            <div class="col-sm-10">
+                                <input type="url" class="form-control" placeholder="http://example.org"
+                                    id="metadata_identification_url">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- End : Identification Metadata configuration -->
+                <!-- Start : License Metadata configuration -->
+
+                <div class="card mt-2">
+                    <div class="card-header">
+                        <b>License</b>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="row mb-3">
+                            <label for="metadata_license_name" class="col-sm-2 col-form-label">Name</label>
+                            <div class="col-sm-10">
+                                <input type="url" class="form-control" placeholder="CC-BY 4.0 license"
+                                    id="metadata_license_name">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="metadata_license_url" class="col-sm-2 col-form-label">URL</label>
+                            <div class="col-sm-10">
+                                <input type="url" class="form-control"
+                                    placeholder=" https://creativecommons.org/licenses/by/4.0/"
+                                    id="metadata_license_url">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- End : License Metadata configuration -->
+
+                <!-- Start : Provider Metadata configuration -->
+
+                <div class="card mt-2">
+                    <div class="card-header">
+                        <b>Provider</b>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="row mb-3">
+                            <label for="metadata_provider_name" class="col-sm-2 col-form-label">Name</label>
+                            <div class="col-sm-10">
+                                <input type="url" class="form-control" placeholder="Organization Name"
+                                    id="metadata_provider_name">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="metadata_provider_url" class="col-sm-2 col-form-label">URL</label>
+                            <div class="col-sm-10">
+                                <input type="url" class="form-control" placeholder="https://pygeoapi.io/"
+                                    id="metadata_provider_url">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- End : Provider Metadata configuration -->
+
+                <!-- Start : Contact Metadata configuration -->
+
+                <div class="card mt-2">
+                    <div class="card-header">
+                        <b>Contact</b>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="row mb-3">
+                            <label for="metadata_contact_name" class="col-sm-2 col-form-label">Full Name</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="Lastname, Firstname"
+                                    id="metadata_contact_name">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="metadata_contact_position" class="col-sm-2 col-form-label">Position</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="Position Title"
+                                    id="metadata_contact_position">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="metadata_contact_address" class="col-sm-3 col-form-label">Mailing
+                                Address</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" placeholder="Full Address"
+                                    id="metadata_contact_address">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="metadata_contact_city" class="col-sm-2 col-form-label">City</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="City" id="metadata_contact_city">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="metadata_contact_stateorprovince"
+                                class="col-sm-3 col-form-label">State/Province</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" placeholder="State/Province"
+                                    id="metadata_contact_stateorprovince">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="metadata_contact_postalcode" class="col-sm-3 col-form-label">Zip or Postal
+                                Code</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" placeholder="Zip or Postal Code"
+                                    id="metadata_contact_postalcode">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="metadata_contact_country" class="col-sm-2 col-form-label">Country</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="country"
+                                    id="metadata_contact_country">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="metadata_contact_phone" class="col-sm-2 col-form-label">Phone</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="+xx-xxx-xxx-xxxx"
+                                    id="metadata_contact_phone">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="metadata_contact_fax" class="col-sm-2 col-form-label">Fax</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="+xx-xxx-xxx-xxxx"
+                                    id="metadata_contact_fax">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="metadata_contact_email" class="col-sm-2 col-form-label">Email</label>
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control" placeholder="you@example.org"
+                                    id="metadata_contact_email">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="metadata_contact_url" class="col-sm-3 col-form-label">Contact URL</label>
+                            <div class="col-sm-9">
+                                <input type="url" class="form-control" placeholder="https://example.com"
+                                    id="metadata_contact_url">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="metadata_contact_" class="col-sm-3 col-form-label">Mailing Address</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" placeholder="Full Address"
+                                    id="metadata_contact_">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="metadata_contact_hours" class="col-sm-3 col-form-label">Working hours</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" placeholder="Mo-Fr 08:00-17:00"
+                                    id="metadata_contact_hours">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="metadata_contact_instructions"
+                                class="col-sm-3 col-form-label">Instructions</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control"
+                                    placeholder="During hours of service. Off on weekends."
+                                    id="metadata_contact_instructions">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="metadata_contact_role" class="col-sm-2 col-form-label">Role</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="pointOfContact"
+                                    id="metadata_contact_role">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End : Contact Metadata configuration -->
+
+            </div>
+
+
+        </div>
+        <!-- End : Metadata configuration -->
+         
+        <div class="d-grid gap-2 mt-2 mb-2">
+            <button class="btn btn-primary" type="button" onclick="exportYML()">Export</button>
+          </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
+        integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <script src="main.js"></script>
+</body>
+
+</html>

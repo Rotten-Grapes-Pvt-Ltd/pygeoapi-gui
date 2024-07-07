@@ -1,0 +1,12 @@
+#dropZone {
+    border: 2px dashed #007bff;
+    border-radius: 5px;
+    padding: 50px;
+    text-align: center;
+    color: #007bff;
+    cursor: pointer;
+}
+
+.hideIt{
+    display: none;
+}
