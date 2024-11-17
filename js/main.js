@@ -1,3 +1,8 @@
+
+$(document).on('click', '.card-header', function() {
+  $(this).next('.collapse').collapse('toggle');
+});
+
 var number_of_languages;
 const dropZone = document.getElementById("dropZone");
 const fileInput = document.getElementById("fileInput");
@@ -76,6 +81,9 @@ function validate(dict) {
   }
   if (checkIfExist("metadata", Object.keys(dict))) {
     fillMetadata(dict.metadata);
+  }
+  if (checkIfExist("resources", Object.keys(dict))) {
+    fillResources(dict.resources);
   }
 }
 
@@ -252,6 +260,16 @@ function updateRotation(value) {
   }
 }
 
+function fillResources(params) {
+  var all_resources  = Object.keys(params)
+  var resource_html =  document.getElementById('all_resources')
+  for (i=0;i<all_resources.length;i++){
+    console.log(all_resources[i])
+    one_resource = addNewResource(all_resources[i],params[all_resources[i]],i)
+    resource_html.innerHTML += one_resource
+  }
+
+}
 function fillMetadata(meta) {
   if (meta.identification.title) {
     $("#metadata_identification_title").val(meta.identification.title);
@@ -901,3 +919,6 @@ function objectToYAML(obj, indentLevel = 0) {
 
   return yamlString;
 }
+
+
+// 
